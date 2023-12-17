@@ -5,5 +5,5 @@
 **в файле PostgreSQL-10_postgresql.conf редактировать строку:**
 - password_encryption = scram-sha-256\
 **в файле PostgreSQL-10_pg_hba.conf редактировать строки:**
-- host    all             all             0.0.0.0/0               scram-sha-256
+- hostnbspall             all             0.0.0.0/0               scram-sha-256
 - host    all             all             ::/0                    scram-sha-256
