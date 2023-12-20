@@ -20,4 +20,15 @@
 - Фронт: html/css, javascript
 - PHP: обращение к серверу базы данных
 - jQuery: AJAX запросы
-- база данных: PostgreSQL
+- база данных: PostgreSQL\
+# Пояснительная записка
+## Развертывание на примере локального сервера Open server
+1. Скачайте репозиторий в папку с доменами:\
+- git clone https://github.com/udult/onlineforum.git
+2. Создайте и импортируйте базу данных postgres (файл /docs/db.sql)\
+3. В файле /php/connect.php отредактируйте строки:
+- $data_base = '';
+- $pg_password = '';
+4. Для корректной работы системы в файле PHP_8.1_php раскомментировать строки:
+- ;extension = pdo_pgsql
+- ;extension = pgsql
