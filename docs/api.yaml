@@ -1,0 +1,237 @@
+openapi: 3.0.0
+info:
+  title: Online Forum API
+  description: API для онлайн-форума
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /login:
+    post:
+      summary: Авторизация пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Успешная авторизация
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_level:
+                    type: integer
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+        '401':
+          description: Неверные учетные данные
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  type:
+                    type: integer
+                  message:
+                    type: string
+  /register:
+    post:
+      summary: Регистрация нового пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                password:
+                  type: string
+                password_confirm:
+                  type: string
+      responses:
+        '200':
+          description: Успешная регистрация
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+        '400':
+          description: Некорректные данные
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  type:
+                    type: integer
+                  message:
+                    type: string
+  /logout:
+    post:
+      summary: Выход пользователя из системы
+      responses:
+        '200':
+          description: Пользователь успешно вышел
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+  /ban:
+    post:
+      summary: Заблокировать пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                user_name:
+                  type: string
+      responses:
+        '200':
+          description: Пользователь заблокирован
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+  /unban:
+    post:
+      summary: Разблокировать пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                user_name:
+                  type: string
+      responses:
+        '200':
+          description: Пользователь разблокирован
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+  /topics:
+    get:
+      summary: Получить список тем
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Topic'
+  /topics/{topic_id}:
+    get:
+      summary: Получить информацию о теме
+      parameters:
+        - in: path
+          name: topic_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
+  /topics/{topic_id}/posts:
+    get:
+      summary: Получить сообщения в теме
+      parameters:
+        - in: path
+          name: topic_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+components:
+  schemas:
+    Topic:
+      type: object
+      properties:
+        topic_id:
+          type: integer
+        topic_subject:
+          type: string
+        add_time:
+          type: string
+        created_by:
+          type: integer
+        topic_content:
+          type: string
+        topic_status:
+          type: integer
+        user:
+          type: string
+    Post:
+      type: object
+      properties:
+        post_id:
+          type: integer
+        post_topic:
+          type: integer
+        post_content:
+          type: string
+        add_time:
+          type: string
+        created_by:
+          type: integer
+        user:
+          type: string
