@@ -4,7 +4,7 @@ info:
   description: API для онлайн-форума
   version: 1.0.0
 servers:
-  - url: https://api.example.com/v1
+  - url: http://127.0.0.1/
 paths:
   /login:
     post:
